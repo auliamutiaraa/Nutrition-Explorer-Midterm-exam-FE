@@ -1,3 +1,5 @@
+import { findFallbackFood, searchFallbackFoods } from "../data/fallbackFoods.js";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -33,11 +35,22 @@ export async function fetchFoods(query = "healthy") {
   params.append("dataType", "SR Legacy");
   params.append("dataType", "Branded");
 
-  const data = await requestFood(`${API_BASE_URL}/foods/search?${params}`);
-  return (data.foods || []).filter((food) => food.description && food.fdcId).map(normalizeSearchFood);
+  try {
+    const data = await requestFood(`${API_BASE_URL}/foods/search?${params}`);
+    const foods = (data.foods || []).filter((food) => food.description && food.fdcId).map(normalizeSearchFood);
+    return foods.length > 0 ? foods : searchFallbackFoods(query);
+  } catch (error) {
+    return searchFallbackFoods(query);
+  }
 }
 
 export async function fetchFoodByCode(code) {
+  const fallbackFood = findFallbackFood(code);
+
+  if (fallbackFood) {
+    return fallbackFood;
+  }
+
   const params = new URLSearchParams({ api_key: API_KEY });
   const data = await requestFood(`${API_BASE_URL}/food/${code}?${params}`);
 

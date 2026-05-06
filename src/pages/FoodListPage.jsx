@@ -12,6 +12,7 @@ export default function FoodListPage() {
   const [searchTerm, setSearchTerm] = useState("healthy");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     let ignore = false;
@@ -40,7 +41,7 @@ export default function FoodListPage() {
     return () => {
       ignore = true;
     };
-  }, [query]);
+  }, [query, reloadKey]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -113,7 +114,7 @@ export default function FoodListPage() {
 
         <div className="mt-8">
           {loading ? <LoadingSpinner /> : null}
-          {!loading && error ? <ErrorAlert message={error} onRetry={() => setQuery(`${query}`)} /> : null}
+          {!loading && error ? <ErrorAlert message={error} onRetry={() => setReloadKey((current) => current + 1)} /> : null}
           {!loading && !error ? <FoodGrid foods={foods} /> : null}
         </div>
 
