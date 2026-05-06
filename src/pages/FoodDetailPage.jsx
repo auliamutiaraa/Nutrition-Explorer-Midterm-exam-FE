@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import ErrorAlert from "../components/ErrorAlert.jsx";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import { fetchFoodByCode } from "../services/foodApi.js";
+import { getFoodIcon } from "../utils/foodIcon.js";
 import { normalizeGrade, nutritionRows } from "../utils/nutrition.js";
 
 export default function FoodDetailPage() {
@@ -58,6 +59,7 @@ export default function FoodDetailPage() {
   }
 
   const rows = nutritionRows(food.nutriments);
+  const foodIcon = getFoodIcon(food);
 
   return (
     <section className="bg-gradient-to-b from-mist-50 to-white">
@@ -73,7 +75,7 @@ export default function FoodDetailPage() {
               <div className="grid h-72 place-items-center">
                 <div className="relative h-44 w-44 rounded-full bg-white shadow-lift">
                   <div className="absolute inset-5 rounded-full border border-leaf-100 bg-gradient-to-br from-white via-leaf-50 to-mist-100" />
-                  <div className="absolute inset-0 grid place-items-center text-8xl">🍎</div>
+                  <div className="absolute inset-0 grid place-items-center text-8xl">{foodIcon}</div>
                 </div>
               </div>
             </div>

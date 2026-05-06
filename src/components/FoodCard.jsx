@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import { getFoodIcon } from "../utils/foodIcon.js";
 import { formatCalories, normalizeGrade } from "../utils/nutrition.js";
 
 export default function FoodCard({ food }) {
   const calories = formatCalories(food.nutriments);
   const grade = normalizeGrade(food.nutriscore_grade);
-  const plateIcon = food.product_name.length % 3 === 0 ? "🥦" : food.product_name.length % 2 === 0 ? "🍎" : "🥛";
+  const plateIcon = getFoodIcon(food);
 
   return (
     <article className="group flex min-h-[390px] flex-col overflow-hidden rounded-lg border border-white bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-lift">
