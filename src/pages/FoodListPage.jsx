@@ -56,15 +56,75 @@ export default function FoodListPage() {
   return (
     <section id="home" className="soft-grid">
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:py-14">
-        <div className="max-w-4xl animate-fadeUp">
-          <p className="font-semibold text-leaf-700">Discover Food & Health</p>
-          <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
-            Nutrition Explorer
-          </h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600">
-            Jelajahi produk makanan, lihat kalori per 100g, dan buka detail nutrisi penting dalam tampilan yang bersih,
-            ringan, dan responsif.
-          </p>
+        <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="max-w-4xl animate-fadeUp">
+            <div className="inline-flex items-center gap-2 rounded-full border border-leaf-100 bg-white/90 px-4 py-2 text-sm font-bold text-leaf-700 shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-leaf-500" />
+              Discover Food & Health
+            </div>
+            <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-tight text-ink sm:text-5xl lg:text-6xl">
+              Nutrition Explorer
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600">
+              Cari makanan sehari-hari, bandingkan kalori per 100g, lalu buka ringkasan nutrisi yang mudah dibaca.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              {["Kalori", "Protein", "Lemak", "Karbohidrat"].map((item) => (
+                <span key={item} className="rounded-full border border-white bg-white/88 px-4 py-2 text-sm font-bold text-slate-600 shadow-sm">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative animate-fadeUp">
+            <div className="absolute inset-x-8 top-8 h-40 rounded-[48%] bg-leaf-100/60 blur-3xl" />
+            <div className="relative overflow-hidden rounded-lg border border-white bg-white/88 p-5 shadow-lift backdrop-blur">
+              <div className="flex items-center justify-between gap-3 border-b border-leaf-100 pb-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-mist-700">Today Shelf</p>
+                  <h2 className="mt-1 text-xl font-extrabold text-ink">Balanced picks</h2>
+                </div>
+                <div className="rounded-full bg-leaf-50 px-3 py-2 text-sm font-extrabold text-leaf-700">A</div>
+              </div>
+
+              <div className="mt-5 grid gap-4 sm:grid-cols-[0.9fr_1.1fr]">
+                <div className="grid place-items-center rounded-lg bg-gradient-to-br from-leaf-50 via-white to-mist-50 p-6">
+                  <div className="relative h-44 w-44 rounded-full border-[14px] border-white bg-leaf-50 shadow-soft">
+                    <div className="absolute left-7 top-5 grid h-16 w-16 place-items-center rounded-full bg-white text-4xl shadow-sm">
+                      {"\u{1F957}"}
+                    </div>
+                    <div className="absolute bottom-5 left-12 grid h-14 w-14 place-items-center rounded-full bg-white text-3xl shadow-sm">
+                      {"\u{1F35A}"}
+                    </div>
+                    <div className="absolute right-5 top-16 grid h-16 w-16 place-items-center rounded-full bg-white text-4xl shadow-sm">
+                      {"\u{1F357}"}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    ["Greek Yogurt", "97 kcal", "bg-mist-50 text-mist-700", "\u{1F95B}"],
+                    ["Green Salad", "46 kcal", "bg-leaf-50 text-leaf-700", "\u{1F957}"],
+                    ["Oat Bowl", "142 kcal", "bg-amber-50 text-amber-700", "\u{1F963}"],
+                  ].map(([name, kcal, tone, icon]) => (
+                    <div key={name} className="flex items-center gap-3 rounded-lg border border-slate-100 bg-white p-3 shadow-sm">
+                      <div className={`grid h-11 w-11 place-items-center rounded-lg text-2xl ${tone}`}>{icon}</div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-bold text-ink">{name}</p>
+                        <div className="mt-2 h-2 rounded-full bg-slate-100">
+                          <div className="h-2 w-2/3 rounded-full bg-leaf-500" />
+                        </div>
+                      </div>
+                      <p className="text-sm font-extrabold text-slate-600">{kcal}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-10 rounded-lg border border-white bg-white p-4 shadow-soft">
