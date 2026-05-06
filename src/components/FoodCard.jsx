@@ -8,7 +8,7 @@ export default function FoodCard({ food }) {
   const plateIcon = getFoodIcon(food);
 
   return (
-    <article className="group flex min-h-[390px] flex-col overflow-hidden rounded-lg border border-white bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-lift">
+    <article className="group flex min-h-[410px] flex-col overflow-hidden rounded-lg border border-white bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-lift">
       <div className="relative h-48 overflow-hidden bg-gradient-to-br from-leaf-50 via-mist-50 to-white">
         <div className="grid h-full place-items-center">
           <div className="relative h-28 w-28 rounded-full bg-white shadow-soft transition-transform duration-500 group-hover:scale-110">
@@ -24,6 +24,7 @@ export default function FoodCard({ food }) {
       <div className="flex flex-1 flex-col p-5">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-mist-700">{food.brands || "Food item"}</p>
         <h2 className="mt-2 line-clamp-2 min-h-14 text-xl font-bold text-ink">{food.product_name}</h2>
+        <p className="mt-2 line-clamp-1 text-sm text-slate-500">{food.categories || "Nutrition item"}</p>
         <div className="mt-4 rounded-lg bg-leaf-50 px-4 py-3">
           <p className="text-xs font-semibold uppercase text-slate-500">Kalori per 100g</p>
           <p className="mt-1 text-2xl font-extrabold text-leaf-700">{calories}</p>
@@ -32,7 +33,7 @@ export default function FoodCard({ food }) {
           to={`/foods/${food.code}`}
           className="mt-auto inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition-all duration-300 hover:bg-leaf-600"
         >
-          View Detail
+          Lihat Nutrisi
         </Link>
       </div>
     </article>

@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer id="contact" className="border-t border-leaf-100 bg-white px-5 py-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-        <p>Made with ❤️ by Aulia - Kesmas Student</p>
+        <p>Made with {"\u2764\uFE0F"} by Aulia - Kesmas Student</p>
         <a
           href="https://github.com/"
           target="_blank"
