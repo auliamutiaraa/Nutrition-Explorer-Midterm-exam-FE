@@ -6,24 +6,6 @@ import { fetchFoods } from "../services/foodApi.js";
 
 const quickSearches = ["healthy", "oat", "yogurt", "salad"];
 
-const apiOptions = [
-  {
-    name: "Edamam Food Database API",
-    description: "Detail nutrisi makanan.",
-    tone: "bg-leaf-50 text-leaf-700 border-leaf-100",
-  },
-  {
-    name: "USDA FoodData Central API",
-    description: "Data gizi resmi yang dipakai website ini.",
-    tone: "bg-mist-50 text-mist-700 border-mist-100",
-  },
-  {
-    name: "Nutritionix API",
-    description: "Makanan populer dan nutrisi yang lebih ringan.",
-    tone: "bg-amber-50 text-amber-700 border-amber-100",
-  },
-];
-
 export default function FoodListPage() {
   const [foods, setFoods] = useState([]);
   const [query, setQuery] = useState("healthy");
@@ -135,26 +117,6 @@ export default function FoodListPage() {
           {!loading && !error ? <FoodGrid foods={foods} /> : null}
         </div>
 
-        <section className="mt-12 rounded-lg border border-white bg-white/88 p-5 shadow-soft backdrop-blur sm:p-6">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-leaf-700">Public API</p>
-              <h2 className="mt-2 text-2xl font-extrabold text-ink">Nutrition data sources</h2>
-            </div>
-            <p className="max-w-xl text-sm leading-6 text-slate-600">
-              Pilihan API dari brief desain. Fetch aktif di project ini menggunakan USDA FoodData Central.
-            </p>
-          </div>
-
-          <div className="mt-5 grid gap-3 md:grid-cols-3">
-            {apiOptions.map((api) => (
-              <article key={api.name} className={`rounded-lg border p-4 ${api.tone}`}>
-                <h3 className="text-base font-extrabold">{api.name}</h3>
-                <p className="mt-2 text-sm leading-6 opacity-90">{api.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
       </div>
     </section>
   );
