@@ -51,32 +51,15 @@ export default function FoodListPage() {
   return (
     <section id="home" className="soft-grid">
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:py-14">
-        <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-          <div className="animate-fadeUp">
-            <p className="font-semibold text-leaf-700">Discover Food & Health</p>
-            <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
-              Nutrition Explorer
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600">
-              Jelajahi produk makanan, lihat kalori per 100g, dan buka detail nutrisi penting dalam tampilan yang bersih,
-              ringan, dan responsif.
-            </p>
-          </div>
-
-          <div className="animate-fadeUp rounded-lg border border-white bg-white/84 p-5 shadow-soft backdrop-blur" id="about">
-            <div className="flex items-start gap-4">
-              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-lg bg-mist-100 text-3xl animate-floaty">
-                🥛
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-ink">Health shelf, not a boring catalog</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Data diambil dari USDA FoodData Central API dengan state loading, error handling, dan halaman detail
-                  memakai React Router.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-4xl animate-fadeUp">
+          <p className="font-semibold text-leaf-700">Discover Food & Health</p>
+          <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
+            Nutrition Explorer
+          </h1>
+          <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600">
+            Jelajahi produk makanan, lihat kalori per 100g, dan buka detail nutrisi penting dalam tampilan yang bersih,
+            ringan, dan responsif.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-10 rounded-lg border border-white bg-white p-3 shadow-soft">
@@ -117,7 +100,6 @@ export default function FoodListPage() {
           {!loading && error ? <ErrorAlert message={error} onRetry={() => setReloadKey((current) => current + 1)} /> : null}
           {!loading && !error ? <FoodGrid foods={foods} /> : null}
         </div>
-
       </div>
     </section>
   );
