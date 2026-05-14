@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import { fetchFoodByCode } from "../services/foodApi.js";
 import { getFoodIcon } from "../utils/foodIcon.js";
 import { normalizeGrade, nutritionRows } from "../utils/nutrition.js";
+import { saveRecentFood } from "../utils/recentFoods.js";
 
 export default function FoodDetailPage() {
   const { code } = useParams();
@@ -22,6 +23,7 @@ export default function FoodDetailPage() {
         const data = await fetchFoodByCode(code);
         if (!ignore) {
           setFood(data);
+          saveRecentFood(data);
         }
       } catch (err) {
         if (!ignore) {

@@ -3,8 +3,31 @@ import ErrorAlert from "../components/ErrorAlert.jsx";
 import FoodGrid from "../components/FoodGrid.jsx";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import { fetchFoods } from "../services/foodApi.js";
+import { getFoodIcon } from "../utils/foodIcon.js";
+import { formatCalories } from "../utils/nutrition.js";
+import { getRecentFoods } from "../utils/recentFoods.js";
 
 const quickSearches = ["healthy", "oat", "yogurt", "salad"];
+const defaultShelfFoods = [
+  {
+    code: "default-yogurt",
+    product_name: "Greek Yogurt",
+    categories: "Dairy and fermented food",
+    nutriments: { "energy-kcal_100g": 97 },
+  },
+  {
+    code: "default-salad",
+    product_name: "Green Salad",
+    categories: "Vegetables and fresh meals",
+    nutriments: { "energy-kcal_100g": 46 },
+  },
+  {
+    code: "default-oat",
+    product_name: "Oat Bowl",
+    categories: "Whole grain breakfast",
+    nutriments: { "energy-kcal_100g": 142 },
+  },
+];
 
 export default function FoodListPage() {
   const [foods, setFoods] = useState([]);
@@ -13,6 +36,7 @@ export default function FoodListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
+  const [recentFoods, setRecentFoods] = useState([]);
 
   useEffect(() => {
     let ignore = false;
@@ -43,6 +67,19 @@ export default function FoodListPage() {
     };
   }, [query, reloadKey]);
 
+  useEffect(() => {
+    function syncRecentFoods() {
+      setRecentFoods(getRecentFoods());
+    }
+
+    syncRecentFoods();
+    window.addEventListener("focus", syncRecentFoods);
+
+    return () => {
+      window.removeEventListener("focus", syncRecentFoods);
+    };
+  }, []);
+
   function handleSubmit(event) {
     event.preventDefault();
     setQuery(searchTerm.trim() || "healthy");
@@ -52,6 +89,10 @@ export default function FoodListPage() {
     setSearchTerm("");
     setQuery("healthy");
   }
+
+  const shelfFoods = recentFoods.length > 0 ? recentFoods : defaultShelfFoods;
+  const shelfTitle = recentFoods.length > 0 ? "Terakhir dilihat" : "Balanced picks";
+  const shelfLabel = recentFoods.length > 0 ? "Recent Shelf" : "Today Shelf";
 
   return (
     <section id="home" className="soft-grid">
@@ -83,42 +124,53 @@ export default function FoodListPage() {
             <div className="relative overflow-hidden rounded-lg border border-white bg-white/88 p-5 shadow-lift backdrop-blur">
               <div className="flex items-center justify-between gap-3 border-b border-leaf-100 pb-4">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-mist-700">Today Shelf</p>
-                  <h2 className="mt-1 text-xl font-extrabold text-ink">Balanced picks</h2>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-mist-700">{shelfLabel}</p>
+                  <h2 className="mt-1 text-xl font-extrabold text-ink">{shelfTitle}</h2>
                 </div>
-                <div className="rounded-full bg-leaf-50 px-3 py-2 text-sm font-extrabold text-leaf-700">A</div>
+                <div className="rounded-full bg-leaf-50 px-3 py-2 text-sm font-extrabold text-leaf-700">USDA</div>
               </div>
 
               <div className="mt-5 grid gap-4 sm:grid-cols-[0.9fr_1.1fr]">
                 <div className="grid place-items-center rounded-lg bg-gradient-to-br from-leaf-50 via-white to-mist-50 p-6">
                   <div className="relative h-44 w-44 rounded-full border-[14px] border-white bg-leaf-50 shadow-soft">
-                    <div className="absolute left-7 top-5 grid h-16 w-16 place-items-center rounded-full bg-white text-4xl shadow-sm">
-                      {"\u{1F957}"}
-                    </div>
-                    <div className="absolute bottom-5 left-12 grid h-14 w-14 place-items-center rounded-full bg-white text-3xl shadow-sm">
-                      {"\u{1F35A}"}
-                    </div>
-                    <div className="absolute right-5 top-16 grid h-16 w-16 place-items-center rounded-full bg-white text-4xl shadow-sm">
-                      {"\u{1F357}"}
-                    </div>
+                    {shelfFoods.slice(0, 3).map((food, index) => (
+                      <div
+                        key={food.code}
+                        className={`absolute grid place-items-center rounded-full bg-white shadow-sm ${
+                          index === 0
+                            ? "left-7 top-5 h-16 w-16 text-4xl"
+                            : index === 1
+                              ? "bottom-5 left-12 h-14 w-14 text-3xl"
+                              : "right-5 top-16 h-16 w-16 text-4xl"
+                        }`}
+                      >
+                        {getFoodIcon(food)}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  {[
-                    ["Greek Yogurt", "97 kcal", "bg-mist-50 text-mist-700", "\u{1F95B}"],
-                    ["Green Salad", "46 kcal", "bg-leaf-50 text-leaf-700", "\u{1F957}"],
-                    ["Oat Bowl", "142 kcal", "bg-amber-50 text-amber-700", "\u{1F963}"],
-                  ].map(([name, kcal, tone, icon]) => (
-                    <div key={name} className="flex items-center gap-3 rounded-lg border border-slate-100 bg-white p-3 shadow-sm">
-                      <div className={`grid h-11 w-11 place-items-center rounded-lg text-2xl ${tone}`}>{icon}</div>
+                  {shelfFoods.map((food, index) => (
+                    <div key={food.code} className="flex items-center gap-3 rounded-lg border border-slate-100 bg-white p-3 shadow-sm">
+                      <div
+                        className={`grid h-11 w-11 place-items-center rounded-lg text-2xl ${
+                          index === 0
+                            ? "bg-mist-50 text-mist-700"
+                            : index === 1
+                              ? "bg-leaf-50 text-leaf-700"
+                              : "bg-amber-50 text-amber-700"
+                        }`}
+                      >
+                        {getFoodIcon(food)}
+                      </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate font-bold text-ink">{name}</p>
+                        <p className="truncate font-bold text-ink">{food.product_name}</p>
                         <div className="mt-2 h-2 rounded-full bg-slate-100">
                           <div className="h-2 w-2/3 rounded-full bg-leaf-500" />
                         </div>
                       </div>
-                      <p className="text-sm font-extrabold text-slate-600">{kcal}</p>
+                      <p className="text-sm font-extrabold text-slate-600">{formatCalories(food.nutriments)}</p>
                     </div>
                   ))}
                 </div>
