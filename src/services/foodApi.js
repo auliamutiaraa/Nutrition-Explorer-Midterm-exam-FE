@@ -2,14 +2,15 @@ import { findFallbackFood, searchFallbackFoods } from "../data/fallbackFoods.js"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
+const FOOD_API_PATH = "/fdc/v1";
 
 function assertApiConfig() {
   if (!API_BASE_URL) {
-    throw new Error("VITE_API_BASE_URL belum diatur di file .env");
+    throw new Error("Konfigurasi URL API belum tersedia. Cek file .env.");
   }
 
   if (!API_KEY) {
-    throw new Error("VITE_API_KEY belum diatur di file .env");
+    throw new Error("Konfigurasi API key belum tersedia. Cek file .env.");
   }
 }
 
@@ -36,7 +37,7 @@ export async function fetchFoods(query = "healthy") {
   params.append("dataType", "Branded");
 
   try {
-    const data = await requestFood(`${API_BASE_URL}/foods/search?${params}`);
+    const data = await requestFood(`${API_BASE_URL}${FOOD_API_PATH}/foods/search?${params}`);
     const foods = (data.foods || []).filter((food) => food.description && food.fdcId).map(normalizeSearchFood);
     return foods.length > 0 ? foods : searchFallbackFoods(query);
   } catch (error) {
@@ -52,7 +53,7 @@ export async function fetchFoodByCode(code) {
   }
 
   const params = new URLSearchParams({ api_key: API_KEY });
-  const data = await requestFood(`${API_BASE_URL}/food/${code}?${params}`);
+  const data = await requestFood(`${API_BASE_URL}${FOOD_API_PATH}/food/${code}?${params}`);
 
   if (!data.fdcId) {
     throw new Error("Detail makanan tidak ditemukan.");
