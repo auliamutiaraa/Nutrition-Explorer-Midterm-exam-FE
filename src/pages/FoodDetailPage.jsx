@@ -1,47 +1,13 @@
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ErrorAlert from "../components/ErrorAlert.jsx";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
-import { fetchFoodByCode } from "../services/foodApi.js";
+import { useFoodDetail } from "../hooks/useFoodDetail.js";
 import { getFoodIcon } from "../utils/foodIcon.js";
 import { normalizeGrade, nutritionRows } from "../utils/nutrition.js";
-import { saveRecentFood } from "../utils/recentFoods.js";
 
 export default function FoodDetailPage() {
   const { code } = useParams();
-  const [food, setFood] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let ignore = false;
-
-    async function loadDetail() {
-      try {
-        setLoading(true);
-        setError("");
-        const data = await fetchFoodByCode(code);
-        if (!ignore) {
-          setFood(data);
-          saveRecentFood(data);
-        }
-      } catch (err) {
-        if (!ignore) {
-          setError(err.message);
-        }
-      } finally {
-        if (!ignore) {
-          setLoading(false);
-        }
-      }
-    }
-
-    loadDetail();
-
-    return () => {
-      ignore = true;
-    };
-  }, [code]);
+  const { food, loading, error } = useFoodDetail(code);
 
   if (loading) {
     return (

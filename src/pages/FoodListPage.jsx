@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ErrorAlert from "../components/ErrorAlert.jsx";
 import FoodGrid from "../components/FoodGrid.jsx";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
-import { fetchFoods } from "../services/foodApi.js";
+import { useFoods } from "../hooks/useFoods.js";
+import { useRecentFoods } from "../hooks/useRecentFoods.js";
 import { getFoodIcon } from "../utils/foodIcon.js";
 import { formatCalories } from "../utils/nutrition.js";
-import { getRecentFoods } from "../utils/recentFoods.js";
 
 const quickSearches = ["healthy", "oat", "yogurt", "salad"];
 const defaultShelfFoods = [
@@ -30,55 +30,9 @@ const defaultShelfFoods = [
 ];
 
 export default function FoodListPage() {
-  const [foods, setFoods] = useState([]);
-  const [query, setQuery] = useState("healthy");
+  const { foods, query, setQuery, loading, error, retry } = useFoods("healthy");
   const [searchTerm, setSearchTerm] = useState("healthy");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [reloadKey, setReloadKey] = useState(0);
-  const [recentFoods, setRecentFoods] = useState([]);
-
-  useEffect(() => {
-    let ignore = false;
-
-    async function loadFoods() {
-      try {
-        setLoading(true);
-        setError("");
-        const data = await fetchFoods(query);
-        if (!ignore) {
-          setFoods(data);
-        }
-      } catch (err) {
-        if (!ignore) {
-          setError(err.message);
-        }
-      } finally {
-        if (!ignore) {
-          setLoading(false);
-        }
-      }
-    }
-
-    loadFoods();
-
-    return () => {
-      ignore = true;
-    };
-  }, [query, reloadKey]);
-
-  useEffect(() => {
-    function syncRecentFoods() {
-      setRecentFoods(getRecentFoods());
-    }
-
-    syncRecentFoods();
-    window.addEventListener("focus", syncRecentFoods);
-
-    return () => {
-      window.removeEventListener("focus", syncRecentFoods);
-    };
-  }, []);
+  const recentFoods = useRecentFoods();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -87,7 +41,7 @@ export default function FoodListPage() {
 
   function clearSearch() {
     setSearchTerm("");
-    setQuery("healthy");
+    setQuery("healthy", { allowFallback: true });
   }
 
   const shelfFoods = recentFoods.length > 0 ? recentFoods : defaultShelfFoods;
@@ -243,7 +197,7 @@ export default function FoodListPage() {
           ) : null}
 
           {loading ? <LoadingSpinner /> : null}
-          {!loading && error ? <ErrorAlert message={error} onRetry={() => setReloadKey((current) => current + 1)} /> : null}
+          {!loading && error ? <ErrorAlert message={error} onRetry={retry} /> : null}
           {!loading && !error && foods.length > 0 ? <FoodGrid foods={foods} /> : null}
           {!loading && !error && foods.length === 0 ? (
             <div className="rounded-lg border border-dashed border-leaf-200 bg-white/80 p-8 text-center shadow-soft">

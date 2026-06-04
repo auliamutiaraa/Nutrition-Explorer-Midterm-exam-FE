@@ -25,7 +25,8 @@ async function requestFood(url) {
   return response.json();
 }
 
-export async function fetchFoods(query = "healthy") {
+export async function fetchFoods(query = "healthy", options = {}) {
+  const { allowFallback = true } = options;
   const params = new URLSearchParams({
     api_key: API_KEY,
     query,
@@ -39,9 +40,13 @@ export async function fetchFoods(query = "healthy") {
   try {
     const data = await requestFood(`${API_BASE_URL}${FOOD_API_PATH}/foods/search?${params}`);
     const foods = (data.foods || []).filter((food) => food.description && food.fdcId).map(normalizeSearchFood);
-    return foods.length > 0 ? foods : searchFallbackFoods(query);
+    return foods;
   } catch (error) {
-    return searchFallbackFoods(query);
+    if (allowFallback) {
+      return searchFallbackFoods(query);
+    }
+
+    throw new Error(`"${query}" tidak ditemukan.`);
   }
 }
 
