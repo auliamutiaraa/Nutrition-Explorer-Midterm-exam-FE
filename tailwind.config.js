@@ -6,28 +6,36 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", "Poppins", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
       },
       colors: {
         leaf: {
-          50: "#effaf2",
-          100: "#d9f2df",
-          500: "#41a867",
-          600: "#2f8b52",
-          700: "#256f43",
+          50: "#fff1f7",
+          100: "#fce1ee",
+          500: "#e01f78",
+          600: "#db2777",
+          700: "#be185d",
         },
         mist: {
-          50: "#f4fbff",
-          100: "#dceff8",
-          500: "#4d9fc4",
-          700: "#236987",
+          50: "#fff7fb",
+          100: "#f8c9df",
+          500: "#f472b6",
+          700: "#ec4899",
         },
-        berry: "#d95772",
-        citrus: "#f5b84c",
-        ink: "#173042",
+        herb: {
+          50: "#ecfdf3",
+          100: "#d1fadf",
+          500: "#22c55e",
+          600: "#16a34a",
+          700: "#15803d",
+        },
+        berry: "#db2777",
+        citrus: "#f9a8d4",
+        ink: "#111827",
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(31, 82, 69, 0.13)",
-        lift: "0 24px 60px rgba(23, 48, 66, 0.18)",
+        soft: "0 18px 45px rgba(190, 24, 93, 0.11)",
+        lift: "0 24px 60px rgba(17, 24, 39, 0.18)",
       },
       keyframes: {
         floaty: {
