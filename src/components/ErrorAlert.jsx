@@ -1,6 +1,6 @@
 export default function ErrorAlert({ message, onRetry }) {
   return (
-    <div className="rounded-lg border border-red-200 bg-red-50 p-5 text-red-800 shadow-sm">
+    <div className="rounded-lg border border-red-200 bg-red-50 p-5 text-red-800 shadow-sm dark:border-red-900 dark:bg-red-950 dark:text-red-100">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-semibold">! {message}</p>
         {onRetry ? (

@@ -30,4 +30,5 @@ export function saveRecentFood(food) {
   ].slice(0, MAX_RECENT_FOODS);
 
   localStorage.setItem(RECENT_FOODS_KEY, JSON.stringify(nextFoods));
+  window.dispatchEvent(new Event("recent-foods-updated"));
 }

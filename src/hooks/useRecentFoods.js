@@ -11,9 +11,11 @@ export function useRecentFoods() {
 
     syncRecentFoods();
     window.addEventListener("focus", syncRecentFoods);
+    window.addEventListener("recent-foods-updated", syncRecentFoods);
 
     return () => {
       window.removeEventListener("focus", syncRecentFoods);
+      window.removeEventListener("recent-foods-updated", syncRecentFoods);
     };
   }, []);
 

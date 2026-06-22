@@ -30,13 +30,13 @@ export default function FoodDetailPage() {
   const foodIcon = getFoodIcon(food);
 
   return (
-    <section className="bg-gradient-to-b from-mist-50 to-white">
+    <section className="bg-gradient-to-b from-mist-50 to-white dark:from-slate-950 dark:to-slate-900">
       <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
         <BackLink />
 
-        <article className="mt-6 animate-fadeUp overflow-hidden rounded-lg border border-white bg-white shadow-lift">
+        <article className="mt-6 animate-fadeUp overflow-hidden rounded-lg border border-white bg-white shadow-lift dark:border-slate-700 dark:bg-slate-900">
           <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="relative min-h-80 bg-gradient-to-br from-leaf-50 via-white to-mist-100 p-8">
+            <div className="relative min-h-80 bg-gradient-to-br from-leaf-50 via-white to-mist-100 p-8 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800">
               <div className="absolute left-6 top-6 rounded-full bg-white/90 px-4 py-2 text-sm font-bold text-leaf-700 shadow-sm">
                 USDA {normalizeGrade(food.nutriscore_grade)}
               </div>
@@ -49,13 +49,13 @@ export default function FoodDetailPage() {
             </div>
 
             <div className="p-6 sm:p-8">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-mist-700">{food.brands || "Food item"}</p>
-              <h1 className="mt-3 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">{food.product_name}</h1>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-mist-700 dark:text-mist-100">{food.brands || "Food item"}</p>
+              <h1 className="mt-3 text-3xl font-extrabold leading-tight text-ink dark:text-white sm:text-4xl">{food.product_name}</h1>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">
                 {food.categories || "Kategori belum tersedia dari sumber API."}
               </p>
 
-              <div className="mt-8 overflow-hidden rounded-lg border border-leaf-100">
+              <div className="mt-8 overflow-hidden rounded-lg border border-leaf-100 dark:border-slate-700">
                 <table className="w-full border-collapse text-left">
                   <thead className="bg-ink text-white">
                     <tr>
@@ -65,9 +65,9 @@ export default function FoodDetailPage() {
                   </thead>
                   <tbody>
                     {rows.map((row, index) => (
-                      <tr key={row.label} className={index % 2 === 0 ? "bg-leaf-50" : "bg-white"}>
-                        <td className="px-5 py-4 font-semibold text-ink">{row.label}</td>
-                        <td className="px-5 py-4 text-slate-700">{row.value}</td>
+                      <tr key={row.label} className={index % 2 === 0 ? "bg-leaf-50 dark:bg-slate-800" : "bg-white dark:bg-slate-900"}>
+                        <td className="px-5 py-4 font-semibold text-ink dark:text-white">{row.label}</td>
+                        <td className="px-5 py-4 text-slate-700 dark:text-slate-300">{row.value}</td>
                       </tr>
                     ))}
                   </tbody>

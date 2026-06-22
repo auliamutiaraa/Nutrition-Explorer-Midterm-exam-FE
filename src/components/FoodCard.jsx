@@ -8,8 +8,8 @@ export default function FoodCard({ food }) {
   const plateIcon = getFoodIcon(food);
 
   return (
-    <article className="group flex min-h-[410px] flex-col overflow-hidden rounded-lg border border-white bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-lift">
-      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-leaf-50 via-mist-50 to-white">
+    <article className="group flex min-h-[410px] flex-col overflow-hidden rounded-lg border border-white bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-lift dark:border-slate-700 dark:bg-slate-900">
+      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-leaf-50 via-mist-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-800">
         <div className="grid h-full place-items-center">
           <div className="relative h-28 w-28 rounded-full bg-white shadow-soft transition-transform duration-500 group-hover:scale-110">
             <div className="absolute inset-3 rounded-full border border-leaf-100 bg-gradient-to-br from-white to-leaf-50" />
@@ -22,16 +22,16 @@ export default function FoodCard({ food }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-mist-700">{food.brands || "Food item"}</p>
-        <h2 className="mt-2 line-clamp-2 min-h-14 text-xl font-bold text-ink">{food.product_name}</h2>
-        <p className="mt-2 line-clamp-1 text-sm text-slate-500">{food.categories || "Nutrition item"}</p>
-        <div className="mt-4 rounded-lg bg-leaf-50 px-4 py-3">
-          <p className="text-xs font-semibold uppercase text-slate-500">Kalori per 100g</p>
-          <p className="mt-1 text-2xl font-extrabold text-leaf-700">{calories}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-mist-700 dark:text-mist-100">{food.brands || "Food item"}</p>
+        <h2 className="mt-2 line-clamp-2 min-h-14 text-xl font-bold text-ink dark:text-white">{food.product_name}</h2>
+        <p className="mt-2 line-clamp-1 text-sm text-slate-500 dark:text-slate-300">{food.categories || "Nutrition item"}</p>
+        <div className="mt-4 rounded-lg bg-leaf-50 px-4 py-3 dark:bg-slate-800">
+          <p className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-300">Kalori per 100g</p>
+          <p className="mt-1 text-2xl font-extrabold text-leaf-700 dark:text-leaf-100">{calories}</p>
         </div>
         <Link
           to={`/foods/${food.code}`}
-          className="mt-auto inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition-all duration-300 hover:bg-leaf-600"
+          className="mt-auto inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition-all duration-300 hover:bg-leaf-600 dark:bg-leaf-600 dark:hover:bg-mist-700"
         >
           Lihat Nutrisi
         </Link>
