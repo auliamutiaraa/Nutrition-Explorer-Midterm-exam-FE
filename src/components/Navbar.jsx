@@ -4,10 +4,10 @@ import { useTheme } from "../contexts/ThemeContext.jsx";
 export default function Navbar() {
   const { isDarkMode, toggleTheme } = useTheme();
   const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Recent Shelf", href: "#recent-shelf" },
-    { label: "Foods", href: "#foods" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", href: "/" },
+    { label: "Recent Shelf", href: "/#recent-shelf" },
+    { label: "Foods", href: "/#foods" },
+    { label: "Review Food", href: "/review-food" },
   ];
 
   return (
@@ -26,9 +26,15 @@ export default function Navbar() {
 
         <div className="hidden items-center justify-center gap-7 text-sm font-bold text-slate-600 dark:text-slate-300 md:flex">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="transition-colors duration-300 hover:text-leaf-600 dark:hover:text-leaf-100">
+            <NavLink 
+              key={item.href} 
+              to={item.href} 
+              className={({ isActive }) => 
+                `transition-colors duration-300 hover:text-leaf-600 dark:hover:text-leaf-100 ${isActive && item.href === '/review-food' ? 'text-leaf-600 dark:text-leaf-100' : ''}`
+              }
+            >
               {item.label}
-            </a>
+            </NavLink>
           ))}
         </div>
 

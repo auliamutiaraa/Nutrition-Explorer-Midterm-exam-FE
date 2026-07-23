@@ -15,8 +15,13 @@ const iconRules = [
 ];
 
 export function getFoodIcon(food) {
-  const text = `${food?.product_name || ""} ${food?.categories || ""} ${food?.brands || ""}`.toLowerCase();
+  let text = "";
+  if (typeof food === "string") {
+    text = food.toLowerCase();
+  } else {
+    text = `${food?.product_name || food?.name || food?.title || ""} ${food?.categories || ""} ${food?.brands || ""}`.toLowerCase();
+  }
   const match = iconRules.find((rule) => rule.terms.some((term) => text.includes(term)));
 
-  return match?.icon || "\u{1F958}";
+  return match?.icon || "🥘";
 }
