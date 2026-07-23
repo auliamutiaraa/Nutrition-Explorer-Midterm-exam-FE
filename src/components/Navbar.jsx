@@ -14,7 +14,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/70 bg-white/90 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#050914]/90">
       <nav className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-4 sm:px-8">
         <NavLink to="/" className="flex min-w-0 items-center gap-3 text-ink dark:text-white">
-         <span className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full bg-herb-100 shadow-inner dark:bg-herb-500/15">
+          <span className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full bg-herb-100 shadow-inner dark:bg-herb-500/15">
             <span className="h-6 w-7 rounded-b-full rounded-t-lg border-2 border-herb-600 bg-white dark:bg-[#050914]" />
             <span className="absolute right-3 top-3 h-3.5 w-2.5 rotate-45 rounded-full bg-herb-600" />
           </span>
@@ -26,10 +26,10 @@ export default function Navbar() {
 
         <div className="hidden items-center justify-center gap-7 text-sm font-bold text-slate-600 dark:text-slate-300 md:flex">
           {navItems.map((item) => (
-            <NavLink 
-              key={item.href} 
-              to={item.href} 
-              className={({ isActive }) => 
+            <NavLink
+              key={item.href}
+              to={item.href}
+              className={({ isActive }) =>
                 `transition-colors duration-300 hover:text-leaf-600 dark:hover:text-leaf-100 ${isActive && item.href === '/review-food' ? 'text-leaf-600 dark:text-leaf-100' : ''}`
               }
             >
